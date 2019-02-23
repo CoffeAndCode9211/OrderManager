@@ -12,7 +12,9 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Repository;
 
+import com.omnicuris.cme.entity.Item;
 import com.omnicuris.cme.entity.Order;
+import com.omnicuris.cme.utils.Status;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
@@ -24,7 +26,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
     
 	@Override
-	public List<Order> findOrderByStatus(String status) {
+	public List<Order> findOrderByStatus(Status status) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);
 
@@ -33,6 +35,26 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
         if (status != null) {
             predicates.add(cb.equal(order.get("status"), status));
+        }
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        TypedQuery<Order> query = em.createQuery(cq);
+        return query.getResultList();
+	}
+	
+	@Override
+	public List<Order> findOrderByItemId(long itemId) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Order> cq = cb.createQuery(Order.class);
+
+        Root<Order> order = cq.from(Order.class);
+        List<Predicate> predicates = new ArrayList<>();
+
+        if (itemId != 0) {
+        	Item item = new Item();
+        	item.setId(itemId);
+            predicates.add(cb.equal(order.get("itemId"), item));
+            predicates.add(cb.equal(order.get("status"), Status.ACTIVE));
         }
         cq.where(predicates.toArray(new Predicate[0]));
 

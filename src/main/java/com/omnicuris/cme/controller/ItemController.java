@@ -3,7 +3,6 @@ package com.omnicuris.cme.controller;
 import java.util.List;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.omnicuris.cme.entity.Item;
+import com.omnicuris.cme.entity.Order;
 import com.omnicuris.cme.service.ItemService;
+import com.omnicuris.cme.service.OrderService;
 import com.omnicuris.cme.utils.ResponseStatus;
 import com.omnicuris.cme.utils.Status;
 
@@ -31,6 +32,9 @@ public class ItemController {
 
 	@Autowired
 	private ItemService itemService;
+	
+	@Autowired
+	private OrderService orderService;
 
 	@GetMapping
 	public List<Item> getAllActiveItems() {
@@ -56,8 +60,16 @@ public class ItemController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> deleteitem(@PathVariable("id") long id) {
-		ResponseStatus status = itemService.deleteItem(id);
+	public ResponseEntity<Object> deleteitem(@PathVariable("id") long itemId) {
+		//check for any active Order for this Item before deleting
+		List<Order> lstOrder =  orderService.findOrderByItemId(itemId);
+		if(lstOrder != null && !lstOrder.isEmpty()){
+			ResponseStatus status = new ResponseStatus();
+			status.setMsg("Active order exist for this Item. Delete is not allowed.");
+			return new ResponseEntity<>(status, HttpStatus.BAD_REQUEST);
+		}
+		
+		ResponseStatus status = itemService.deleteItem(itemId);
 		if (status != null && status.isStatus()) {
 			return new ResponseEntity<>(status, HttpStatus.OK);
 		}

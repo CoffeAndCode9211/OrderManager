@@ -89,6 +89,9 @@ public class ItemService {
 					status.setMsg(Utils.DELETE_MSG);
 					status.setStatus(true);
 				}
+			}else{
+				status.setMsg("Item not found");
+				status.setStatus(false);
 			}
 		} catch (Exception e) {
 			LOG.error("Error:", e);
