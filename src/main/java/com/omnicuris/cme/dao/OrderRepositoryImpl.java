@@ -25,6 +25,9 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         this.em = em;
     }
     
+    /**
+     * get order by Status
+     */
 	@Override
 	public List<Order> findOrderByStatus(Status status) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();

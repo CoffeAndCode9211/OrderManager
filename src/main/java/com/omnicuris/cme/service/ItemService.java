@@ -26,10 +26,20 @@ public class ItemService {
 		this.itemRepository = orderRepository;
 	}
 
+	/**
+	 * Get Item by Status
+	 * @param status
+	 * @return Object/null
+	 */
 	public List<Item> findItemByStatus(Status status) {
 		return itemRepository.findItemByStatus(status);
 	}
 
+	/**
+	 * Get Item by ID
+	 * @param id
+	 * @return Object/null
+	 */
 	public Item findItemById(long id) {
 		Optional<Item> itemOpt = itemRepository.findById(id);
 		if (itemOpt.isPresent()) {
@@ -38,10 +48,15 @@ public class ItemService {
 		return null;
 	}
 
+	/**
+	 * Save an Item
+	 * @param item
+	 * @return Status with msg
+	 */
 	public ResponseStatus saveItem(Item item) {
 		ResponseStatus status = new ResponseStatus();
 		try {
-			if(item.getStatus() == null){
+			if (item.getStatus() == null) {
 				item.setStatus(Status.ACTIVE);
 			}
 			if (itemRepository.save(item) != null) {
@@ -57,11 +72,16 @@ public class ItemService {
 		}
 		return status;
 	}
-	
+
+	/**
+	 * Update an Item
+	 * @param item
+	 * @return Status with msg
+	 */
 	public ResponseStatus updateItem(Item item) {
 		ResponseStatus status = new ResponseStatus();
 		try {
-			if(item.getStatus() == null){
+			if (item.getStatus() == null) {
 				item.setStatus(Status.ACTIVE);
 			}
 			if (itemRepository.save(item) != null) {
@@ -78,6 +98,11 @@ public class ItemService {
 		return status;
 	}
 
+	/**
+	 * Delete an Item after checking for any active Item
+	 * @param itemId
+	 * @return Status with msg
+	 */
 	public ResponseStatus deleteItem(long itemId) {
 		ResponseStatus status = new ResponseStatus("Error", false);
 		try {
@@ -89,7 +114,7 @@ public class ItemService {
 					status.setMsg(Utils.DELETE_MSG);
 					status.setStatus(true);
 				}
-			}else{
+			} else {
 				status.setMsg("Item not found");
 				status.setStatus(false);
 			}

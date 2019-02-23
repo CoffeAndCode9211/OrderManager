@@ -7,8 +7,18 @@ import com.omnicuris.cme.utils.Status;
 
 public interface OrderRepositoryCustom  {
 
+	/**
+	 * Get order by status
+	 * @param status
+	 * @return List<Order>
+	 */
 	List<Order> findOrderByStatus(Status status);
 	
+	/**
+	 * Get Order by ItemId
+	 * @param status
+	 * @return List<Order>
+	 */
 	List<Order> findOrderByItemId(long itemId);
 	
 }

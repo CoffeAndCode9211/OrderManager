@@ -42,41 +42,46 @@ public class OrderService {
 		}
 		return null;
 	}
-	
+
 	public List<Order> findOrderByItemId(long itemId) {
 		List<Order> lstOfActvOrder = orderRepository.findOrderByItemId(itemId);
 		return lstOfActvOrder;
 	}
 
+	/**
+	 * Save an Order and update item accordingly
+	 * @param order
+	 * @return Status with msg
+	 */
 	public ResponseStatus saveOrder(Order order) {
 		ResponseStatus status = new ResponseStatus();
 		try {
-			
+
 			Item item = itemService.findItemById(order.getItemId().getId());
 			int qtyleft = item.getQty();
 			int qtyOrdered = order.getQty();
-			if(qtyleft > 0 && qtyleft >= qtyOrdered){
+			if (qtyleft > 0 && qtyleft >= qtyOrdered) {
 				double totPrice = Utils.round(qtyOrdered * item.getPrice(), 2);
 				order.setTotalAmt(totPrice);
-				
-				item.setQty( (qtyleft - qtyOrdered) );
-			}else if(qtyleft <= 0){
+
+				item.setQty((qtyleft - qtyOrdered));
+			} else if (qtyleft <= 0) {
 				status.setMsg("Ordered item is Out of Stock");
 				status.setStatus(false);
 				return status;
-			}else{
-				status.setMsg("We have "+qtyleft+" pieces available in stock.");
+			} else {
+				status.setMsg("We have " + qtyleft + " pieces available in stock.");
 				status.setStatus(false);
 				return status;
 			}
-			
+
 			if (order.getStatus() == null) {
 				order.setStatus(Status.ACTIVE);
 			}
 			if (orderRepository.save(order) != null) {
-				
+
 				itemService.saveItem(item);
-				
+
 				status.setMsg(Utils.SAVE_MSG);
 				status.setStatus(true);
 			} else {
@@ -90,35 +95,38 @@ public class OrderService {
 		return status;
 	}
 
-	
-
+	/**
+	 * Delete order and Update Item accordingly
+	 * @param orderId
+	 * @return Status with msg
+	 */
 	public ResponseStatus deleteOrder(long orderId) {
 		ResponseStatus status = new ResponseStatus("Error", false);
 		try {
 			Optional<Order> orderOpt = orderRepository.findById(orderId);
 			if (orderOpt.isPresent()) {
 				Order order = orderOpt.get();
-				if(order.getStatus().equals(Status.INACTIVE)){
+				if (order.getStatus().equals(Status.INACTIVE)) {
 					status.setMsg("Item not found");
 					status.setStatus(false);
 					return status;
 				}
-				LOG.info("Orderr status:"+order.getStatus());
+				LOG.info("Orderr status:" + order.getStatus());
 				Item item = itemService.findItemById(order.getItemId().getId());
 				int qtyleft = item.getQty();
 				int qtyOrdered = order.getQty();
 				int newItemQty = qtyleft + qtyOrdered;
-				
+
 				order.setStatus(Status.INACTIVE);
 				if (orderRepository.save(order) != null) {
-					
+
 					item.setQty(newItemQty);
 					itemService.updateItem(item);
-					
+
 					status.setMsg(Utils.DELETE_MSG);
 					status.setStatus(true);
 				}
-			}else{
+			} else {
 				status.setMsg("Item not found");
 				status.setStatus(false);
 			}
@@ -129,7 +137,5 @@ public class OrderService {
 		}
 		return status;
 	}
-
-	
 
 }

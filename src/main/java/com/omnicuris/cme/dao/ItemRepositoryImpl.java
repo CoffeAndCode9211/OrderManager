@@ -24,6 +24,9 @@ public class ItemRepositoryImpl implements ItemRepositoryCustom {
 		this.em = em;
 	}
 
+	/**
+	 * Get Items by Status
+	 */
 	@Override
 	public List<Item> findItemByStatus(Status status) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
