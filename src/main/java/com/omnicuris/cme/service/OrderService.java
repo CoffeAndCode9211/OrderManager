@@ -58,6 +58,11 @@ public class OrderService {
 		try {
 
 			Item item = itemService.findItemById(order.getItemId().getId());
+			if(item.getStatus().equals(Status.INACTIVE)){
+				status.setMsg(Utils.ITEM_INACTIVE);
+				status.setStatus(false);
+				return status;
+			}
 			int qtyleft = item.getQty();
 			int qtyOrdered = order.getQty();
 			if (qtyleft > 0 && qtyleft >= qtyOrdered) {

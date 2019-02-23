@@ -9,6 +9,7 @@ public class Utils {
 	public static final String UPDATE_MSG = "Update Success";
 	public static final String DELETE_MSG = "Delete Success";
 	public static final String ERROR_MSG = "Error while saving Data";
+	public static final String ITEM_INACTIVE = "This Item no longer exist. Please select from available Items.";
 
 	public static double round(double value, int places) {
 		if (places < 0)

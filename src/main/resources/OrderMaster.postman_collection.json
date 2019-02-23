@@ -157,7 +157,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\n    \"itemId\": { \"id\": 1  },\n    \"qty\": 7\n}"
+							"raw": " {\n    \"itemId\": { \"id\": 1  },\n    \"qty\": 7,\n    \"email\" : \"test@gmail.com\"\n}"
 						},
 						"url": {
 							"raw": "localhost:9988/api/order",
@@ -183,7 +183,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "localhost:9988/api/order/7",
+							"raw": "localhost:9988/api/order/9",
 							"host": [
 								"localhost"
 							],
@@ -191,7 +191,7 @@
 							"path": [
 								"api",
 								"order",
-								"7"
+								"9"
 							]
 						}
 					},

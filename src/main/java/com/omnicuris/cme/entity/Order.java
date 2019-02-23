@@ -29,6 +29,9 @@ public class Order implements Serializable {
 	@Column(name = "DESCRIPTION")
 	private String description;
 
+	@Column(name = "EMAIL")
+	private String email;
+
 	@Column(name = "TOTAL_AMT", nullable = false)
 	private double totalAmt;
 
@@ -91,11 +94,18 @@ public class Order implements Serializable {
 		this.itemId = itemId;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", description=" + description
-				+ ", totalAmt=" + totalAmt + ", qty=" + qty + ", status="
-				+ status + ", itemId=" + itemId + "]";
+		return "Order [id=" + id + ", description=" + description + ", email=" + email + ", totalAmt=" + totalAmt
+				+ ", qty=" + qty + ", status=" + status + ", itemId=" + itemId + "]";
 	}
 
 }
