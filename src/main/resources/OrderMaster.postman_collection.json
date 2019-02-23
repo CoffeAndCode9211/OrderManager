@@ -1,0 +1,203 @@
+{
+	"info": {
+		"_postman_id": "09c67d0e-62a5-4e61-88be-c9b1eb04ddbe",
+		"name": "OrderMaster",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Item APIs",
+			"item": [
+				{
+					"name": "Get All Active Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:9988/api/item",
+							"host": [
+								"localhost"
+							],
+							"port": "9988",
+							"path": [
+								"api",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add an Item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n    \"name\": \"Samsung Mobile\",\n    \"description\": \"Test Item Desc\",\n    \"price\": 12345,\n    \"qty\": 10\n}"
+						},
+						"url": {
+							"raw": "localhost:9988/api/item",
+							"host": [
+								"localhost"
+							],
+							"port": "9988",
+							"path": [
+								"api",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": 1,\n        \"name\": \"Item\",\n        \"description\": \"Test Item Desc\",\n        \"price\": 120.23,\n        \"qty\": 15\n}"
+						},
+						"url": {
+							"raw": "localhost:9988/api/item",
+							"host": [
+								"localhost"
+							],
+							"port": "9988",
+							"path": [
+								"api",
+								"item"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:9988/api/item/1",
+							"host": [
+								"localhost"
+							],
+							"port": "9988",
+							"path": [
+								"api",
+								"item",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order APIs",
+			"item": [
+				{
+					"name": "Get All Active Orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:9988/api/order",
+							"host": [
+								"localhost"
+							],
+							"port": "9988",
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add an Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n    \"itemId\": { \"id\": 1  },\n    \"qty\": 7\n}"
+						},
+						"url": {
+							"raw": "localhost:9988/api/order",
+							"host": [
+								"localhost"
+							],
+							"port": "9988",
+							"path": [
+								"api",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an Order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:9988/api/order/7",
+							"host": [
+								"localhost"
+							],
+							"port": "9988",
+							"path": [
+								"api",
+								"order",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
