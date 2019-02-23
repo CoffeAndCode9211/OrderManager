@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.omnicuris.cme.utils.Status;
 
@@ -23,15 +24,18 @@ public class Item implements Serializable {
 	private long id;
 
 	@Column(name = "NAME", nullable = false)
+	@NotNull(message="Please enter Item Name")
 	private String name;
 
 	@Column(name = "DESCRIPTION")
 	private String description;
 
 	@Column(name = "PRICE", nullable = false)
+	@NotNull(message="Please enter Item Price")
 	private double price;
 
 	@Column(name = "QTY", nullable = false)
+	@NotNull(message="Please enter Item Quantity")
 	private int qty;
 
 	@Column(name = "STATUS", nullable = false)
